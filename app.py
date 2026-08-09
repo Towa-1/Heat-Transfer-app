@@ -11,74 +11,11 @@ AUTHOR: Senior Thermal & UI/UX Systems Engineer
 """
 
 import math
+import os
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
-
-# Custom Aurora Dark Theme CSS Overrides
-st.markdown("""
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-/* Global Inter Font and Matte Black Background */
-html, body, [class*="css"], .stApp {
-    font-family: 'Inter', sans-serif !important;
-    background-color: #000000 !important;
-    color: #ffffff !important;
-}
-
-/* Sidebar Styling */
-section[data-testid="stSidebar"] {
-    background-color: #090d16 !important;
-    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
-}
-
-section[data-testid="stSidebar"] * {
-    color: #ffffff !important;
-}
-
-/* Card Containers & Dark Form Panels */
-div[data-testid="stVerticalBlock"] > div {
-    background-color: #0d111c !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    border-radius: 16px !important;
-    padding: 12px !important;
-}
-
-/* Input Fields (#1A1A1A Background) */
-.stNumberInput input, .stSelectbox div[data-baseweb="select"], .stTextInput input {
-    background-color: #1a1a1a !important;
-    color: #ffffff !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    border-radius: 12px !important;
-}
-
-/* High Contrast White Action Buttons */
-.stButton > button {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    font-weight: 600 !important;
-    border-radius: 12px !important;
-    height: 48px !important;
-    width: 100% !important;
-    border: none !important;
-    transition: all 0.2s ease !important;
-}
-
-.stButton > button:hover {
-    background-color: rgba(255, 255, 255, 0.85) !important;
-    transform: scale(0.99);
-}
-
-/* Clean Header Typography */
-h1, h2, h3, h4, h5, h6 {
-    color: #ffffff !important;
-    font-weight: 600 !important;
-    letter-spacing: -0.5px !important;
-}
-</style>
-""", unsafe_allow_html=True)
 
 # =============================================================================
 # PAGE CONFIGURATION
@@ -89,6 +26,38 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded",
 )
+
+# =============================================================================
+# EXPLICIT CSS LOAD (Local and Streamlit Cloud Compatible)
+# =============================================================================
+def load_css():
+    css_path = os.path.join(os.path.dirname(__file__), "styles", "style.css")
+    if os.path.exists(css_path):
+        with open(css_path, "r", encoding="utf-8") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
+load_css()
+
+# =============================================================================
+# TOP HERO BANNER & QUICK START USER GUIDE
+# =============================================================================
+st.markdown("""
+<div style="background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%); padding: 36px; border-radius: 20px; color: white; margin-bottom: 24px;">
+    <span style="background-color: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Thermal Engineering Platform</span>
+    <h1 style="font-size: 2.2rem; font-weight: 700; margin: 12px 0 8px 0; color: white;">Heat Transport Analyser</h1>
+    <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.5; max-width: 700px;">
+        Welcome! This software suite enables engineers and students to model, simulate, and analyze 1D steady-state heat conduction and convection across composite resistance networks, extended fin surfaces, and critical insulation geometries.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+with st.expander("📖 Quick Start User Guide", expanded=False):
+    st.markdown("""
+    **How to Use the Heat Transport Analyser:**
+    1. **Select Module**: Choose between **Multi-Layer Resistance Networks**, **Extended Surfaces / Fins**, and **Critical Radius of Insulation** in the left sidebar.
+    2. **Input Parameters**: Configure layer conductivities ($k$), thicknesses ($L$), radii ($r$), and fluid convection coefficients ($h$).
+    3. **Analyze Results**: View calculated thermal resistances, heat transfer rates ($Q$), temperature distribution plots, and LaTeX data tables.
+    """)
 
 # =============================================================================
 # HELPER FUNCTIONS

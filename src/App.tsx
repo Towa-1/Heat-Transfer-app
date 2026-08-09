@@ -62,6 +62,14 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+# PAGE CONFIGURATION
+st.set_page_config(
+    page_title="Heat Transport Analyser",
+    page_icon="🔥",
+    layout="wide",
+    initial_sidebar_state="expanded",
+)
+
 # Custom Aurora Dark Theme CSS Overrides
 st.markdown("""
 <style>
@@ -126,13 +134,24 @@ h1, h2, h3, h4, h5, h6 {
 </style>
 """, unsafe_allow_html=True)
 
-# PAGE CONFIGURATION
-st.set_page_config(
-    page_title="Heat Transport Analyser",
-    page_icon="🔥",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
+# TOP HERO BANNER & QUICK START USER GUIDE
+st.markdown("""
+<div style="background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%); padding: 36px; border-radius: 20px; color: white; margin-bottom: 24px;">
+    <span style="background-color: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Thermal Engineering Platform</span>
+    <h1 style="font-size: 2.2rem; font-weight: 700; margin: 12px 0 8px 0; color: white;">Heat Transport Analyser</h1>
+    <p style="color: rgba(255,255,255,0.8); font-size: 0.95rem; line-height: 1.5; max-width: 700px;">
+        Welcome! This software suite enables engineers and students to model, simulate, and analyze 1D steady-state heat conduction and convection across composite resistance networks, extended fin surfaces, and critical insulation geometries.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+with st.expander("📖 Quick Start User Guide", expanded=False):
+    st.markdown("""
+    **How to Use the Heat Transport Analyser:**
+    1. **Select Module**: Choose between **Multi-Layer Resistance Networks**, **Extended Surfaces / Fins**, and **Critical Radius of Insulation** in the left sidebar.
+    2. **Input Parameters**: Configure layer conductivities ($k$), thicknesses ($L$), radii ($r$), and fluid convection coefficients ($h$).
+    3. **Analyze Results**: View calculated thermal resistances, heat transfer rates ($Q$), temperature distribution plots, and LaTeX data tables.
+    """)
 
 # [See full script implementation in app.py]
 `;
