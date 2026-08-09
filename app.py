@@ -7,6 +7,19 @@ DESCRIPTION: A production-ready Streamlit application engineered for heat transf
              extended surfaces (fins), and critical radius of insulation.
 THEME: Light Engineering Theme (Custom injected CSS, Open Sans typography)
 AUTHOR: Senior Thermal & UI/UX Systems Engineer
+
+AI Tools Used: 
+- Google AI Studio (Gemini)
+
+Key Prompts Given:
+1. "Build a multi-geometry thermal resistance network calculator with custom CSS styling."
+2. "Integrate extended surface fin temperature profiles and critical insulation radius plots using Plotly."
+3. "Apply a clean light engineering theme override with Inter typography and custom card components."
+
+Manual Verification & Edits:
+- Fixed st.dataframe LaTeX rendering by using clean Unicode mathematical expressions.
+- Corrected Plotly axis text colors to dark slate for high contrast visibility.
+- Removed empty div wrappers causing ghost whitespace cards.
 ===============================================================================
 """
 
