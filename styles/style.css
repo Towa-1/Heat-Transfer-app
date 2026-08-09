@@ -406,11 +406,28 @@ div[data-testid="stAlert"] {
 /* Headings Typography */
 h1, h2, h3, h4, h5, h6,
 .stMarkdown h1, .stMarkdown h2, .stMarkdown h3, .stMarkdown h4 {
-    color: #0f172a !important;
-    font-weight: 700 !important;
-    letter-spacing: -0.02em !important;
+    color: #0f172a;
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 p, span, li {
-    color: #334155 !important;
+    color: #334155;
+}
+
+/* Hero Banner High Contrast White Text Overrides */
+.main-hero-banner,
+.main-hero-banner *,
+.main-hero-banner h1,
+.main-hero-banner p,
+.main-hero-banner span {
+    color: #ffffff !important;
+}
+
+.main-hero-banner p {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.main-hero-banner span {
+    color: rgba(255, 255, 255, 0.95) !important;
 }

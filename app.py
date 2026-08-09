@@ -42,10 +42,10 @@ load_css()
 # TOP HERO BANNER & QUICK START USER GUIDE
 # =============================================================================
 st.markdown("""
-<div style="background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%); padding: 32px; border-radius: 20px; color: white; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);">
-    <span style="background-color: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Thermal Engineering Platform</span>
-    <h1 style="font-size: 2.2rem; font-weight: 700; margin: 12px 0 8px 0; color: white;">Heat Transport Analyser</h1>
-    <p style="color: rgba(255,255,255,0.85); font-size: 0.95rem; line-height: 1.5; max-width: 750px; margin: 0;">
+<div class="main-hero-banner" style="background: linear-gradient(135deg, #1e3a8a 0%, #1e1b4b 100%); padding: 32px; border-radius: 20px; color: white; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(30, 58, 138, 0.15);">
+    <span style="background-color: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; color: #ffffff !important;">Thermal Engineering Platform</span>
+    <h1 style="font-size: 2.2rem; font-weight: 700; margin: 12px 0 8px 0; color: #ffffff !important;">Heat Transport Analyser</h1>
+    <p style="color: rgba(255,255,255,0.9) !important; font-size: 0.95rem; line-height: 1.5; max-width: 750px; margin: 0;">
         Model, simulate, and analyze 1D steady-state heat conduction and convection across composite resistance networks, extended fin surfaces, and critical insulation geometries.
     </p>
 </div>
