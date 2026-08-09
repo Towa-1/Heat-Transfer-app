@@ -62,58 +62,76 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+# Custom Aurora Dark Theme CSS Overrides
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Global Inter Font and Matte Black Background */
+html, body, [class*="css"], .stApp {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background-color: #090d16 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #ffffff !important;
+}
+
+/* Card Containers & Dark Form Panels */
+div[data-testid="stVerticalBlock"] > div {
+    background-color: #0d111c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 12px !important;
+}
+
+/* Input Fields (#1A1A1A Background) */
+.stNumberInput input, .stSelectbox div[data-baseweb="select"], .stTextInput input {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 12px !important;
+}
+
+/* High Contrast White Action Buttons */
+.stButton > button {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    height: 48px !important;
+    width: 100% !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    transform: scale(0.99);
+}
+
+/* Clean Header Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.5px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # PAGE CONFIGURATION
 st.set_page_config(
     page_title="Heat Transport Analyser",
     page_icon="🔥",
     layout="wide",
     initial_sidebar_state="expanded",
-)
-
-# LIGHT THEME - CUSTOM CSS INJECTION
-st.markdown(
-    """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
-    html, body, [class*="css"], .stApp {
-        font-family: 'Open Sans', sans-serif !important;
-        background-color: #f8fafc !important;
-        color: #1e293b !important;
-    }
-
-    .stAppViewContainer {
-        background: #f8fafc !important;
-    }
-
-    #MainMenu, footer, header {visibility: hidden;}
-
-    section[data-testid="stSidebar"] {
-        background-color: #ffffff !important;
-        border-right: 1px solid #e2e8f0 !important;
-    }
-
-    .app-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    div.stButton > button {
-        background-color: #2563eb !important;
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        border-radius: 12px !important;
-        height: 48px !important;
-        width: 100% !important;
-        border: none !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
 )
 
 # [See full script implementation in app.py]

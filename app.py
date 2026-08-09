@@ -16,6 +16,70 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
+# Custom Aurora Dark Theme CSS Overrides
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Global Inter Font and Matte Black Background */
+html, body, [class*="css"], .stApp {
+    font-family: 'Inter', sans-serif !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+}
+
+/* Sidebar Styling */
+section[data-testid="stSidebar"] {
+    background-color: #090d16 !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+section[data-testid="stSidebar"] * {
+    color: #ffffff !important;
+}
+
+/* Card Containers & Dark Form Panels */
+div[data-testid="stVerticalBlock"] > div {
+    background-color: #0d111c !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border-radius: 16px !important;
+    padding: 12px !important;
+}
+
+/* Input Fields (#1A1A1A Background) */
+.stNumberInput input, .stSelectbox div[data-baseweb="select"], .stTextInput input {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 12px !important;
+}
+
+/* High Contrast White Action Buttons */
+.stButton > button {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+    border-radius: 12px !important;
+    height: 48px !important;
+    width: 100% !important;
+    border: none !important;
+    transition: all 0.2s ease !important;
+}
+
+.stButton > button:hover {
+    background-color: rgba(255, 255, 255, 0.85) !important;
+    transform: scale(0.99);
+}
+
+/* Clean Header Typography */
+h1, h2, h3, h4, h5, h6 {
+    color: #ffffff !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.5px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # =============================================================================
 # PAGE CONFIGURATION
 # =============================================================================
@@ -24,144 +88,6 @@ st.set_page_config(
     page_icon="🔥",
     layout="wide",
     initial_sidebar_state="expanded",
-)
-
-# =============================================================================
-# LIGHT THEME - CUSTOM CSS INJECTION
-# =============================================================================
-st.markdown(
-    """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
-    /* Global Typography & Canvas */
-    html, body, [class*="css"], .stApp {
-        font-family: 'Open Sans', sans-serif !important;
-        background-color: #f8fafc !important;
-        color: #1e293b !important;
-    }
-
-    .stAppViewContainer {
-        background: #f8fafc !important;
-    }
-
-    /* Hide default Streamlit visual clutter */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
-
-    /* Sidebar Styling */
-    section[data-testid="stSidebar"] {
-        background-color: #ffffff !important;
-        border-right: 1px solid #e2e8f0 !important;
-    }
-    
-    section[data-testid="stSidebar"] .stMarkdown h1,
-    section[data-testid="stSidebar"] .stMarkdown h2,
-    section[data-testid="stSidebar"] .stMarkdown h3 {
-        color: #0f172a !important;
-    }
-
-    /* Cards & Containers */
-    .app-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 16px;
-        padding: 24px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    }
-
-    .app-hero {
-        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-        border: 1px solid #cbd5e1;
-        border-radius: 16px;
-        padding: 28px;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .phase-badge {
-        display: inline-block;
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-right: 8px;
-    }
-
-    .phase-active {
-        background: #dbeafe;
-        color: #1d4ed8;
-        border: 1px solid #bfdbfe;
-    }
-
-    .phase-idle {
-        background: #f1f5f9;
-        color: #64748b;
-        border: 1px solid #e2e8f0;
-    }
-
-    /* Metric Cards Override */
-    div[data-testid="stMetric"] {
-        background: #ffffff !important;
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 14px !important;
-        padding: 16px 20px !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03) !important;
-    }
-
-    div[data-testid="stMetricLabel"] {
-        color: #64748b !important;
-        font-size: 0.88rem !important;
-        font-weight: 600 !important;
-    }
-
-    div[data-testid="stMetricValue"] {
-        color: #0f172a !important;
-        font-weight: 700 !important;
-        font-size: 1.8rem !important;
-    }
-
-    /* Inputs, Selectboxes, Sliders */
-    .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-        background-color: #ffffff !important;
-        color: #0f172a !important;
-        border: 1px solid #cbd5e1 !important;
-        border-radius: 10px !important;
-    }
-
-    /* Button Styling */
-    div.stButton > button {
-        background-color: #2563eb !important;
-        color: #ffffff !important;
-        font-weight: 700 !important;
-        font-size: 1rem !important;
-        border-radius: 12px !important;
-        height: 48px !important;
-        width: 100% !important;
-        border: none !important;
-        transition: all 0.2s ease-in-out !important;
-        cursor: pointer !important;
-    }
-
-    div.stButton > button:hover {
-        background-color: #1d4ed8 !important;
-        transform: translateY(-2px) !important;
-        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3) !important;
-    }
-
-    /* Dataframe Styling */
-    .stDataFrame {
-        border: 1px solid #e2e8f0 !important;
-        border-radius: 12px !important;
-        overflow: hidden !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
 )
 
 # =============================================================================
