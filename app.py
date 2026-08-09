@@ -1,13 +1,20 @@
 """
-===============================================================================
-APPLICATION: Heat Transport Analyser
-MODULE: app.py
-DESCRIPTION: A production-ready Streamlit application engineered for heat transfer 
-             analysis including multi-layer composite resistance networks, 
-             extended surfaces (fins), and critical radius of insulation.
-THEME: Light Engineering Theme (Custom injected CSS, Open Sans typography)
-AUTHOR: Senior Thermal & UI/UX Systems Engineer
-===============================================================================
+==============================================================================
+AI ASSISTED DEVELOPMENT DOCUMENTATION
+==============================================================================
+AI Tools Used: 
+- Google AI Studio (Gemini)
+
+Key Prompts Given:
+1. "Build a multi-geometry thermal resistance network calculator with custom CSS styling."
+2. "Integrate extended surface fin temperature profiles and critical insulation radius plots using Plotly."
+3. "Apply a clean light engineering theme override with Tailwind base rules, Inter typography, and KaTeX scaling."
+
+Manual Verification & Edits:
+- Verified radial thermal resistance formulas for hollow cylinders and spheres.
+- Checked Fourier's Law and Newton's Law of Cooling boundary conditions against course lecture slides.
+- Combined CSS styling and Tailwind base rules directly inside app.py for Streamlit Cloud deployment compatibility.
+==============================================================================
 """
 
 import math
@@ -28,15 +35,305 @@ st.set_page_config(
 )
 
 # =============================================================================
-# EXPLICIT CSS LOAD (Local and Streamlit Cloud Compatible)
+# COMBINED INLINE STYLESHEET (Tailwind Base + Custom Theme + KaTeX Sizing)
 # =============================================================================
-def load_css():
-    css_path = os.path.join(os.path.dirname(__file__), "styles", "style.css")
-    if os.path.exists(css_path):
-        with open(css_path, "r", encoding="utf-8") as f:
-            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+st.markdown("""
+<style>
+/* =============================================================================
+   TAILWIND BASE & GLOBAL RESETS
+   ============================================================================= */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Open+Sans:wght@300;400;600;700&display=swap');
 
-load_css()
+html {
+    font-size: 16px !important;
+}
+
+body, [class*="css"], .stApp {
+    font-family: 'Open Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+}
+
+.stAppViewContainer {
+    background-color: #f8fafc !important;
+}
+
+/* Form Controls Global Typography */
+input, select, textarea, button {
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+/* =============================================================================
+   KATEX MATH FORMULA PROPORTIONAL SCALING
+   ============================================================================= */
+.katex {
+    font-size: 1.1em !important;
+    color: #0f172a !important;
+}
+
+.katex-display {
+    margin: 0.6em 0 !important;
+    padding: 10px !important;
+    background-color: #f8fafc !important;
+    border-radius: 10px !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* =============================================================================
+   STREAMLIT UI CLEANUP & CONTAINER PADDING
+   ============================================================================= */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+header[data-testid="stHeader"] { 
+    background: transparent !important; 
+    z-index: 100;
+}
+
+.main .block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 3rem !important;
+    max-width: 1400px !important;
+}
+
+/* =============================================================================
+   SIDEBAR STYLING
+   ============================================================================= */
+section[data-testid="stSidebar"] {
+    background-color: #ffffff !important;
+    border-right: 1px solid #e2e8f0 !important;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.02) !important;
+}
+
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 1.5rem !important;
+}
+
+section[data-testid="stSidebar"] h1,
+section[data-testid="stSidebar"] h2,
+section[data-testid="stSidebar"] h3,
+section[data-testid="stSidebar"] h4 {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+}
+
+section[data-testid="stSidebar"] p,
+section[data-testid="stSidebar"] label,
+section[data-testid="stSidebar"] span {
+    color: #334155 !important;
+}
+
+/* Sidebar Radio Selector Cards */
+div[data-testid="stRadio"] > label {
+    font-weight: 700 !important;
+    color: #1e293b !important;
+    font-size: 0.85rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
+
+div[data-testid="stRadio"] div[role="radiogroup"] > label {
+    background-color: #f1f5f9 !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 8px !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+div[data-testid="stRadio"] div[role="radiogroup"] > label:hover {
+    background-color: #e2e8f0 !important;
+    border-color: #cbd5e1 !important;
+}
+
+div[data-testid="stRadio"] div[role="radiogroup"] > label[data-checked="true"] {
+    background-color: #eff6ff !important;
+    border-color: #3b82f6 !important;
+    color: #1d4ed8 !important;
+    font-weight: 600 !important;
+}
+
+/* =============================================================================
+   CUSTOM CARD & HERO CONTAINER CLASSES
+   ============================================================================= */
+.app-card {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+}
+
+.app-hero {
+    background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%) !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 16px !important;
+    padding: 24px !important;
+    margin-bottom: 20px !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.05) !important;
+}
+
+.phase-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-right: 8px;
+}
+
+.phase-active {
+    background-color: #dbeafe !important;
+    color: #1d4ed8 !important;
+    border: 1px solid #bfdbfe !important;
+}
+
+.phase-idle {
+    background-color: #f1f5f9 !important;
+    color: #64748b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* =============================================================================
+   METRICS & CARDS OVERRIDES
+   ============================================================================= */
+div[data-testid="stMetric"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    padding: 16px 20px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04) !important;
+    transition: transform 0.15s ease, box-shadow 0.15s ease !important;
+}
+
+div[data-testid="stMetric"]:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08) !important;
+}
+
+div[data-testid="stMetricLabel"] {
+    color: #64748b !important;
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.025em !important;
+}
+
+div[data-testid="stMetricValue"] {
+    color: #0f172a !important;
+    font-weight: 800 !important;
+    font-size: 1.75rem !important;
+}
+
+/* =============================================================================
+   INPUT CONTROLS & FORM OVERRIDES
+   ============================================================================= */
+.stNumberInput label, .stSelectbox label, .stTextInput label, .stSlider label {
+    color: #1e293b !important;
+    font-weight: 600 !important;
+    font-size: 0.88rem !important;
+}
+
+.stNumberInput input, .stTextInput input {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+}
+
+.stNumberInput input:focus, .stTextInput input:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 10px !important;
+    color: #0f172a !important;
+}
+
+.stSelectbox div[data-baseweb="select"] * {
+    color: #0f172a !important;
+    font-weight: 600 !important;
+}
+
+div[data-testid="stCheckbox"] label span p {
+    color: #1e293b !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+/* Action Buttons */
+div.stButton > button {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 0.95rem !important;
+    border-radius: 12px !important;
+    height: 46px !important;
+    width: 100% !important;
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+div.stButton > button:hover {
+    background-color: #1d4ed8 !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35) !important;
+}
+
+/* =============================================================================
+   EXPANDERS, TABLES, & ALERTS
+   ============================================================================= */
+div[data-testid="stExpander"] {
+    background-color: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.03) !important;
+    overflow: hidden !important;
+}
+
+div[data-testid="stExpander"] summary {
+    font-weight: 700 !important;
+    color: #0f172a !important;
+    padding: 14px 18px !important;
+}
+
+div[data-testid="stExpander"] summary:hover {
+    color: #2563eb !important;
+    background-color: #f8fafc !important;
+}
+
+.stDataFrame {
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    background-color: #ffffff !important;
+}
+
+div[data-testid="stAlert"] {
+    border-radius: 12px !important;
+    padding: 14px 18px !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.02em !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 # =============================================================================
 # TOP HERO BANNER & QUICK START USER GUIDE
