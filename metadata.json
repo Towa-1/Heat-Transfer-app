@@ -1,0 +1,6 @@
+{
+  "name": "Heat Transport Analyser",
+  "description": "Streamlit application for multi-layer resistance networks, extended surface fin analysis, and critical radius of insulation with Aurora Dark styling.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

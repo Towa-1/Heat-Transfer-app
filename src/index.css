@@ -1,0 +1,27 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    font-size: 16px;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1e293b;
+  }
+}
+
+/* Enlarge math equations and formulas proportionally */
+.katex {
+  font-size: 1.1em !important;
+}
+
+.katex-display {
+  margin: 0.6em 0 !important;
+}
+
+/* Form controls sizing */
+input, select, textarea, button {
+  font-family: 'Open Sans', sans-serif;
+}
